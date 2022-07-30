@@ -1,5 +1,7 @@
 # hello-world
 
+Vue JS 3 Tutorial for Beginners:	https://www.youtube.com/playlist?list=PLC3y8-rFHvwgeQIfSDtEGVvvSEPDkL_1f
+
 ## Project setup
 ```
 npm install
