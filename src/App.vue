@@ -107,6 +107,14 @@
   <div></div>
 
   <hr />
+  <h3>Directives - v-once v-pre</h3>
+  <div>
+    <span v-once>{{ testingVonce}} </span>
+    <button @click="testingVonce = 'superman'"> v-once cant modify </button><br/>
+    <span v-pre>{{ testingVonce}} </span>
+  </div>
+
+  <hr />
   <h3>Form Handling</h3>
   <div>
     <div class="container">
@@ -114,12 +122,16 @@
         {{ JSON.stringify(myFormValues, null, 2)}}
       </div>
       
-      <form @submit="submitMyApplication">
+      <!-- modifiers: .trim .number lazy .prevent    -->
+      <form @submit.prevent="submitMyApplication">
         <label for="fname">First Name</label>
-        <input type="text" id="fname" name="fname" placeholder="Your name.." v-model="myFormValues.fname">
+        <input type="text" id="fname" name="fname" placeholder="Your name.." v-model.trim.lazy="myFormValues.fname">
 
         <label for="lname">Last Name</label>
         <input type="text" id="lname" name="lname" placeholder="Your last name.." v-model="myFormValues.lname">
+
+        <label for="age">Age</label>
+        <input type="text" id="age" name="age" placeholder="age" v-model.number="myFormValues.age">
 
         <label for="country">Country</label>
         <select id="country" name="country" v-model="myFormValues.country">
@@ -162,9 +174,81 @@
           <input type="radio" id="html" value="10+" v-model="myFormValues.yearsOfExperience"> <label for="10+">10+</label>
         </div>
 
-        <input type="submit" value="Submit">
+        <!-- <input type="submit" value="Submit"> -->
+        <input @keyup.enter.prevent="submitMyApplication" type="text" id="submitWhenEnter" v-model.number="myFormValues.submitWhenEnter">
+
+
       </form>
     </div>
+  </div>
+
+  <hr />
+  <h3>Computed Properties (recalculated when dependencies changed)</h3>
+  <div>
+    {{ fullName }}
+  </div>
+  <div>
+    Total Cart Amount: {{ totalCartAmount }} <br>
+    
+    <button @click="cartItems.push({id: 4, item: 'monitor', price: 49000})"> Add Item</button>
+    
+  </div>
+
+  <hr />
+  <h3>Computed Properties vs. Methods</h3>
+  <div>
+    Methods are "expensive" processes
+    always called when there is changed in the UI
+    Total Cart Amount (method): {{ totalCartAmount02() }} <br>
+    <input type="text" v-model="name">
+  </div>
+
+  <hr />
+  <h3>Computed Properties and v-for</h3>
+  <div>
+  
+    <ul v-for="item in cartItems" :key="item.id">
+      <li> {{ item.id }}</li>
+      <li> {{ item.item }}</li>
+      <li> {{ item.price }}</li>
+    </ul>
+    <h4>Expensive Items</h4>
+    <ul v-for="item in expensiveItems" :key="item.id">
+      <li> {{ item.id }}</li>
+      <li> {{ item.item }}</li>
+      <li> {{ item.price }}</li>
+    </ul>
+    <button @click="cartItems.push({id: 5, item: 'car', price: 1490000})"> Add Expensive Item</button>
+  </div>
+
+  <hr />
+  <h3>Computed Setters</h3>
+  <div>
+    <button @click="changeFullname">Change Full Name</button>
+    {{ myFullname }}
+  </div>
+
+  <hr />
+  <h3>Watchers</h3>
+  <div>Volume Tracker (0-20)</div>
+  <div>Current Volume: {{ volume }} -- {{ volumeAlert }} <br>
+    <button @click="volume -=1" :disabled="volume <= 0 ? true : false"> - </button>
+    <button @click="volume +=1" :disabled="volume == 10 ? true : false"> + </button>
+  </div>
+
+  <hr />
+  <h3>Immediate and Deep Watchers</h3>
+  <div>
+    {{ mymovie }}
+    <br>
+    <input type="text" v-model.lazy="mymovie"> 
+    <br>
+    <input type="text" v-model="movieInfo.title">
+    <input type="text" v-model="movieInfo.actor"> 
+    <br>
+    {{ movieList }}
+    <button @click="movieList.push('wonderwoman')">add Movie to list</button>
+
   </div>
 
 </template>
@@ -234,13 +318,44 @@ export default {
       myFormValues: {
         fname: '',
         lname: '',
+        age: null,
         profileSummary: '',
         country: '',
         jobLocation: [],
         remoteWork: 'no',
         mySkills: [],
-        yearsOfExperience: '0-2'
+        yearsOfExperience: '0-2',
+        submitWhenEnter: null
       },
+      testingVonce: 'batman',
+      cartItems: [
+        {
+          id: 1,
+          item: 'phone',
+          price: 200
+        },
+        {
+          id: 2,
+          item: 'laptop',
+          price: 145000
+        },
+        {
+          id: 3,
+          item: 'desktop',
+          price: 105000
+        }
+      ],
+      myfirstName: 'clark',
+      mylastName: 'kent',
+      volume: 0,
+      volumeAlert: '',
+      mymovie: 'netflix',
+      movieInfo: {
+        title: '',
+        actor: ''
+      },
+      movieList: ['the revenant', 'up'],
+
       
     }
   },
@@ -267,10 +382,72 @@ export default {
     getInputValue() {
       return this.$refs.myInput.value
     },
-    submitMyApplication(event) {
-      event.preventDefault();
+    submitMyApplication() {
+      // event.preventDefault();
       console.log(this.myFormValues)
+    },
+    totalCartAmount02() {
+      console.log("🚀 ~ totalCartAmount ~ method property")
+      return this.cartItems.reduce((total, x) => (total += x.price), 0)
+    },
+    changeFullname() {
+      this.myFullname = 'spider man'
     }
+  },
+  computed: {
+    fullName() {
+      return `hallows! ${this.name}`
+    },
+    totalCartAmount() {
+      console.log("🚀 ~ totalCartAmount ~ computed")
+      return this.cartItems.reduce((total, x) => (total += x.price), 0)
+    },
+    expensiveItems() {
+      return this.cartItems.filter(item => item.price > 100000)
+    },
+    //setter //getter
+    myFullname: {
+      get() {
+        return `${this.myfirstName} ${this.mylastName}`
+      },
+      set(value) {
+        const names = value.split(' ')
+        this.myfirstName = names[0]
+        this.mylastName = names[1]
+      }
+    },
+  },
+  watch: { // variable name should be the same in data()
+    volume(newVolumValue, oldVolumValue) {
+      if(newVolumValue > oldVolumValue && newVolumValue == 7) {
+        this.volumeAlert = 'High volume alert'
+      } else {
+        this.volumeAlert = ''
+      }
+    },
+    // mymovie(newMovieValue) {
+    //   console.log `calling API from ${newMovieValue}`
+    // }
+    mymovie: { //this will run initially when the page loads
+      handler(newMovieValue) {
+        console.log `calling API from ${newMovieValue}`
+      },
+      immediate: true,
+    },
+    movieInfo: {
+      handler(newValue) {
+        console.log `calling API from ${newValue.title} - ${newValue.actor}`
+      },
+      immediate: true,
+      deep: true //deep nested object
+    },
+    movieList: {
+      handler(newValue) {
+        console.log `calling API from ${newValue}`
+      },
+      deep: true 
+    }
+
   }
 }
 </script>
