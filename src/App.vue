@@ -275,12 +275,25 @@
     <CccComp />
 
     <hr />
-    <h3>Component Events</h3>
+    <h3>Component Events / Validating Emitted Events</h3>
     <button @click="popupShow = true, popupShowMessage = ''" v-show="!popupShow"> [/] show popup</button>
     <div>{{ popupShowMessage }}</div>
     <PopupComp v-show="popupShow" @closePopup="closethisPopup" />
 
+    <hr />
+    <h3>Components and v-model</h3>
+    <div>
+      <InputComp v-model="cars" />
+      your input: {{ cars }}
+    </div>
 
+    <hr />
+    <h3>Slots (parent controlling child component) / Card Component</h3>
+    <div>
+      <CardComp :employees="employees"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar"
+          style="width:100%">
+      </CardComp>
+    </div>
 
 
 
@@ -291,6 +304,8 @@ import GreetComp from './components/Greet.vue'
 import ArticleComp from './components/Article.vue'
 import CccComp from './components/Ccc.vue'
 import PopupComp from './components/Popup.vue'
+import InputComp from './components/Input.vue'
+import CardComp from './components/Card.vue'
 
 export default {
   name: "App",
@@ -299,6 +314,8 @@ export default {
     ArticleComp,
     CccComp,
     PopupComp,
+    InputComp,
+    CardComp,
   },
   data() {
     return {
@@ -401,7 +418,18 @@ export default {
       movieList: ["the revenant", "up"],
       popupShow: false,
       popupShowMessage: '',
-    };
+      cars: "",
+      employees: [
+        {
+          name: 'John Doe',
+          title: 'IT Consultant',
+        },
+        {
+          name: 'Mary Smith',
+          title: 'HR Manager'
+        }
+      ]
+    }
   },
   methods: {
     addIt(a, b, c) {

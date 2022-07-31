@@ -14,6 +14,7 @@ export default {
   name: 'PopupComp',
   emits: {
     closePopup: (message) => {
+      // message coming from input event
       if (!message) {
         return false
       } else {
