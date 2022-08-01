@@ -1,13 +1,27 @@
 <template>
+
   <div class="card" v-for="(employee, i) in employees" :key="i">
-    <slot>
+    <div id="card-header">
+      <slot name="header">
+
+      </slot>
+    </div>
+
+    <slot name="image">
       <!-- any html passed from parent component will be displayed here -->
     </slot>
 
-    <div class="container">
+    <div class="card-container">
       <h4><b>{{ employee.name }}</b></h4>
       <p>{{ employee.title }}</p>
     </div>
+
+    <div id="card-footer">
+      <slot name="footer">
+
+      </slot>
+    </div>
+
   </div>
 </template>
 
@@ -34,7 +48,7 @@ export default {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.container {
+.card-container {
   padding: 2px 16px;
 }
 </style>

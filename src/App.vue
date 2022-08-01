@@ -118,7 +118,7 @@
     <hr />
     <h3>Form Handling</h3>
     <div>
-      <div class="container">
+      <div class="app-container">
         <div>
           {{ JSON.stringify(myFormValues, null, 2) }}
         </div>
@@ -288,14 +288,74 @@
     </div>
 
     <hr />
-    <h3>Slots (parent controlling child component) / Card Component</h3>
+    <h3>Slots (parent controlling child component) / Card Component / Named Slots</h3>
     <div>
-      <CardComp :employees="employees"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar"
-          style="width:100%">
+
+      <CardComp :employees="employees">
+
+        <template v-slot:header>
+          header
+        </template>
+
+        <template v-slot:image>
+          <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+        </template>
+
+        <template v-slot:footer>
+          <button> View Employee </button>
+        </template>
+
       </CardComp>
     </div>
 
 
+    <hr />
+    <h3>Slots Props</h3>
+    <NameListComp>
+      <template v-slot:default="slotProps">
+        {{ slotProps.actorFname }} - {{ slotProps.actorLname }}
+      </template>
+    </NameListComp>
+
+    <NameListComp>
+      <template v-slot:default="slotProps">
+        {{ slotProps.actorLname }}, {{ slotProps.actorFname }}
+      </template>
+    </NameListComp>
+
+
+    <hr />
+    <h3>Components Styles</h3>
+    <ChildStyles>
+      <h4>Child Styles Component</h4>
+    </ChildStyles>
+
+    <hr />
+    <h3>Dynamic Components (Tabs) / Keeping Dynamic Components Alive</h3>
+    <button @click="activeTab = 'TabA'">Tab A</button>
+    <button @click="activeTab = 'TabB'">Tab B</button>
+    <button @click="activeTab = 'TabC'">Tab C</button>
+
+    <keep-alive>
+      <component :is="activeTab" />
+    </keep-alive>
+    <!-- this will reduce the amount of code and easy to maintain in the long run -->
+    <!-- <TabA v-if="activeTab === 'TabA'" />
+    <TabB v-if="activeTab === 'TabB'" />
+    <TabC v-if="activeTab === 'TabC'" /> -->
+
+
+    <!-- Teleport Component -->
+    <PortalComp />
+
+    <hr />
+
+    <button @click="showModal = true">Show Modal</button>
+    <teleport to="#modal-root">
+      <ModalComp v-show="showModal" @closeModal="showModal = false">
+        Popup Modal Content
+      </ModalComp>
+    </teleport>
 
 </template>
 
@@ -306,6 +366,14 @@ import CccComp from './components/Ccc.vue'
 import PopupComp from './components/Popup.vue'
 import InputComp from './components/Input.vue'
 import CardComp from './components/Card.vue'
+import NameListComp from './components/NameList.vue'
+import ChildStyles from './components/ChildStyles.vue'
+import TabA from './components/tabs/A.vue'
+import TabB from './components/tabs/B.vue'
+import TabC from './components/tabs/C.vue'
+import PortalComp from './components/Portal.vue'
+import ModalComp from './components/Modal.vue'
+
 
 export default {
   name: "App",
@@ -316,9 +384,17 @@ export default {
     PopupComp,
     InputComp,
     CardComp,
+    NameListComp,
+    ChildStyles,
+    TabA,
+    TabB,
+    TabC,
+    PortalComp,
+    ModalComp,
   },
   data() {
     return {
+      showModal: false,
       username: 'valcaro87@gmail.com',
       name: "val caro",
       channel: "halows!",
@@ -428,7 +504,8 @@ export default {
           name: 'Mary Smith',
           title: 'HR Manager'
         }
-      ]
+      ],
+      activeTab: 'TabA'
     }
   },
   methods: {
@@ -572,7 +649,7 @@ export default {
 input[type=text],
 select,
 textarea {
-  width: 100%;
+  width: 20%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -580,6 +657,8 @@ textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+  display: block;
+  margin: 0 auto;
 }
 
 input[type=submit] {
@@ -595,7 +674,7 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
-.container {
+.app-container {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
@@ -612,4 +691,20 @@ input[type=submit]:hover {
 .skillsets span {
   display: inline-block;
 }
+
+h4 {
+  color: blue;
+}
+
+/* .container {
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* .content {
+  max-width: 400px;
+  position: relative;
+} */
 </style>
