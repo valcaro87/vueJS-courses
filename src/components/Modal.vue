@@ -2,8 +2,21 @@
   <!-- <div class="modal-overlay" @click="$emit('closeModal')"> -->
   <div class="modal-overlay">
     <div class="modal-content">
-      <slot></slot>
+      <h2> {{ title }}</h2>
       <hr />
+
+      <div class="defaultClass">
+        <slot name="defaultClass">
+        </slot>
+      </div>
+
+
+      <div class="modalcontentSlotOption">
+        <slot name="modalcontentSlotOption">
+        </slot>
+      </div>
+
+
       <button @click="$emit('closeModal')">Close</button>
     </div>
   </div>
@@ -13,6 +26,7 @@
 export default {
   name: 'ModalComp',
   emits: ['closeModal'],
+  props: ['title']
 };
 </script>
 

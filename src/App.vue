@@ -352,8 +352,15 @@
 
     <button @click="showModal = true">Show Modal</button>
     <teleport to="#modal-root">
-      <ModalComp v-show="showModal" @closeModal="showModal = false">
-        Popup Modal Content
+      <ModalComp v-show="showModal" @closeModal="showModal = false" title="Vue + Rails 2023">
+
+        <template v-slot:defaultClass>
+          Popup Modal Content
+        </template>
+
+        <template v-slot:modalcontentSlotOption>
+          some questions here
+        </template>
       </ModalComp>
     </teleport>
 
