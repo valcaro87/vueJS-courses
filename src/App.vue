@@ -331,6 +331,9 @@
     </ChildStyles>
 
     <hr />
+    <IdentifySounds />
+
+    <hr />
     <h3>Dynamic Components (Tabs) / Keeping Dynamic Components Alive</h3>
     <button @click="activeTab = 'TabA'">Tab A</button>
     <button @click="activeTab = 'TabB'">Tab B</button>
@@ -380,6 +383,7 @@ import TabB from './components/tabs/B.vue'
 import TabC from './components/tabs/C.vue'
 import PortalComp from './components/Portal.vue'
 import ModalComp from './components/Modal.vue'
+import IdentifySounds from './components/IdentifySounds.vue'
 
 
 export default {
@@ -398,6 +402,7 @@ export default {
     TabC,
     PortalComp,
     ModalComp,
+    IdentifySounds,
   },
   data() {
     return {
