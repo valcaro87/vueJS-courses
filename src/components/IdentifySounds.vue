@@ -17,9 +17,7 @@
           src="https://img.freepik.com/premium-vector/cartoon-brown-horse-running-white-background_29190-5734.jpg?w=2000"
           alt="">
       </div>
-      <!-- <div>
-        {{ congrats }}
-      </div> -->
+
       <div>
         <img v-show="fireworks"
           src="https://cliply.co/wp-content/uploads/2021/09/CLIPLY_372109170_FREE_FIREWORKS_400.gif" alt="">
@@ -30,7 +28,10 @@
         </audio>
       </div>
 
-      <h3>{{ congrats }}</h3>
+      <div>
+        <h3>{{ congrats }}</h3>
+      </div>
+
 
     </div>
 
@@ -46,7 +47,6 @@ export default {
       animalClicked: '',
       fireworks: false,
       clicks: 0,
-      finalScore: 0,
       correctAnswer: 'horse'
     }
   },
@@ -78,7 +78,7 @@ export default {
         points = 10
       }
       else {
-        points = ((10 - clicks) / 10 * 100)
+        points = (((10 - clicks) / 10) * 100)
       }
       return points
     }

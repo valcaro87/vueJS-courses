@@ -352,7 +352,6 @@
     <PortalComp />
 
     <hr />
-
     <button @click="showModal = true">Show Modal</button>
     <teleport to="#modal-root">
       <ModalComp v-show="showModal" @closeModal="showModal = false" title="Vue + Rails 2023">
@@ -366,6 +365,26 @@
         </template>
       </ModalComp>
     </teleport>
+
+
+    <hr />
+    <h3>HTTP Request / http</h3>
+    <p>install axios, yarn add axios</p>
+    <div>
+      <PostList />
+    </div>
+
+    <hr />
+    <h3>HTTP POST Request / http</h3>
+    <div>
+      <CreatePost />
+    </div>
+
+    <hr />
+    <h3>LifeCycle Hooks</h3>
+    <div>
+      <ParentComp />
+    </div>
 
 </template>
 
@@ -384,6 +403,9 @@ import TabC from './components/tabs/C.vue'
 import PortalComp from './components/Portal.vue'
 import ModalComp from './components/Modal.vue'
 import IdentifySounds from './components/IdentifySounds.vue'
+import PostList from './components/PostList.vue'
+import CreatePost from './components/CreatePost.vue'
+import ParentComp from './components/Parent.vue'
 
 
 export default {
@@ -403,6 +425,10 @@ export default {
     PortalComp,
     ModalComp,
     IdentifySounds,
+    PostList,
+    CreatePost,
+    ParentComp,
+
   },
   data() {
     return {
