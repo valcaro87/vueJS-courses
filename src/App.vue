@@ -386,6 +386,19 @@
       <ParentComp />
     </div>
 
+    <hr />
+    <h3>Template Refs</h3>
+    <div>
+      <TemplateRefs />
+    </div>
+
+    <hr />
+    <h3>Reusability with Mixins / Reuse</h3>
+    <div>
+      <ClickCounter />
+      <HoverCounter />
+    </div>
+
 </template>
 
 <script>
@@ -406,6 +419,9 @@ import IdentifySounds from './components/IdentifySounds.vue'
 import PostList from './components/PostList.vue'
 import CreatePost from './components/CreatePost.vue'
 import ParentComp from './components/Parent.vue'
+import TemplateRefs from './components/TemplateRefs.vue'
+import ClickCounter from './components/ClickCounter.vue'
+import HoverCounter from './components/HoverCounter.vue'
 
 
 export default {
@@ -428,6 +444,9 @@ export default {
     PostList,
     CreatePost,
     ParentComp,
+    TemplateRefs,
+    ClickCounter,
+    HoverCounter
 
   },
   data() {
@@ -543,7 +562,7 @@ export default {
           title: 'HR Manager'
         }
       ],
-      activeTab: 'TabA'
+      activeTab: 'TabA',
     }
   },
   methods: {

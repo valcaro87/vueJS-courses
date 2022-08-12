@@ -24,6 +24,19 @@
       </ul>
     </div>
 
+    <hr />
+    <div class="allTodos">
+      <h2>GET Request on Page Load - LifeCycle Hooks created()</h2>
+      <h3>Todos</h3>
+      <ul v-for="(todo) in allTodos" :key="todo.id">
+        <div class="">
+          <p>{{ todo.title }} - completed: {{ todo.completed ? 'yes' : 'no' }} </p>
+        </div>
+      </ul>
+    </div>
+
+
+
   </div>
 </template>
 <script>
@@ -34,6 +47,7 @@ export default {
     return {
       allPost: [],
       allPhotos: [],
+      allTodos: [],
       errorMessage: ''
     }
   },
@@ -57,7 +71,23 @@ export default {
           this.errorMessage = `Error in retrieving data: ${error}`
           // console.log(error)
         })
+    },
+    getTodos() {
+      axios
+        .get('https://jsonplaceholder.typicode.com/todos', {
+          params: {
+            _limit: 5
+          }
+        })
+        .then((response) => {
+          this.allTodos = response.data
+        }).catch((error) => {
+          this.errorMessage = `Error in retrieving To-dos: ${error}`
+        })
     }
+  },
+  created() {
+    this.getTodos()
   },
   mounted() {
     axios
