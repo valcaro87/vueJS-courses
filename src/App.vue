@@ -399,6 +399,24 @@
       <HoverCounter />
     </div>
 
+    <hr />
+    <h3>Compositions API vs Options API / Replacing data with reactive</h3>
+    <div>
+      <OptionsCompositions />
+    </div>
+
+    <hr />
+    <h3>Reactivity and toRefs</h3>
+    <div>
+      <DemoReactivity />
+      <DemoReactivity02 />
+    </div>
+
+    <h3>Replacing methods with composition API</h3>
+    <div>
+      <ReplacingMethods />
+    </div>
+
 </template>
 
 <script>
@@ -422,6 +440,10 @@ import ParentComp from './components/Parent.vue'
 import TemplateRefs from './components/TemplateRefs.vue'
 import ClickCounter from './components/ClickCounter.vue'
 import HoverCounter from './components/HoverCounter.vue'
+import OptionsCompositions from './components/OptionsCompositions.vue'
+import DemoReactivity from './components/DemoReactivity.vue'
+import DemoReactivity02 from './components/DemoReactivity02.vue'
+import ReplacingMethods from './components/ReplacingMethods.vue'
 
 
 export default {
@@ -446,7 +468,11 @@ export default {
     ParentComp,
     TemplateRefs,
     ClickCounter,
-    HoverCounter
+    HoverCounter,
+    OptionsCompositions,
+    DemoReactivity,
+    DemoReactivity02,
+    ReplacingMethods,
 
   },
   data() {
